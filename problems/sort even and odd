@@ -1,0 +1,14 @@
+let num = [854, 5478, 43, 46, 546, 3478]
+let even = []
+let odd = []
+for (let i = 0; i<num.length; i++){
+    if (num[i]%2===0){
+        even.push(num[i])
+        console.log("even-num", num[i])
+    }else{
+        odd.push(num[i])
+    }
+}
+
+console.log ("Even-Array", even)
+console.log ("odd-Array", odd)

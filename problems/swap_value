@@ -1,0 +1,10 @@
+let a = parseInt(prompt("Enter the value for a:"));
+let b = parseInt(prompt("Enter the value for b:"));
+
+let temp = a;
+a = b;
+b = temp;
+
+console.log("After swapping:");
+console.log("a:", a);
+console.log("b:", b);

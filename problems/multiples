@@ -1,0 +1,22 @@
+function multiples(startNumber, endNumber) {
+    try {
+        if (startNumber > endNumber) {
+            return `${startNumber} is greater than ${endNumber}`;
+        }
+        for (let i = startNumber; i <= endNumber; i++) {
+            if (i % 3 === 0 && i % 5 === 0) {
+                console.log("FizzBuzz");
+            } else if (i % 3 === 0) {
+                console.log("Fizz");
+            } else if (i % 5 === 0) {
+                console.log("Buzz");
+            } else {
+                console.log(i);
+            }
+        }
+    } catch (error) {
+        console.error("An error occurred: " + error.message);
+    }
+}
+console.log(multiples(1, 30));
+console.log(multiples("test", 30));
