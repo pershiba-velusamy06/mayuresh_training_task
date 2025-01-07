@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta tags for character set and viewport -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title of the page -->
+  <title>Flappy Bird</title>
+
+  <style>
+    /* Style for the canvas element where the game will be drawn */
+    canvas {
+      display: block;  /* Makes the canvas a block element (takes up full width) */
+      margin: 0 auto;  /* Centers the canvas horizontally */
+      background: skyblue;  /* Skyblue background for the game area */
+    }
+
+    /* Styles for the modal that will display after the game is over */
+    #gameOverModal {
+      display: none; /* Hidden by default, will be shown when the game is over */
+      position: fixed; /* Positioned fixed so it stays in place even when scrolling */
+      top: 0;  /* Aligns the modal at the top of the page */
+      left: 0;  /* Aligns the modal at the left side of the page */
+      width: 100%; /* Full screen width */
+      height: 100%; /* Full screen height */
+      background-color: rgba(0, 0, 0, 0.7); /* Black background with opacity for dimming the page */
+      color: white; /* White text color */
+      font-family: Arial, sans-serif; /* Font style */
+      text-align: center; /* Centers the text inside the modal */
+      padding-top: 200px; /* Vertical centering of the content (adjusts the top padding) */
+    }
+
+    /* Style for the button inside the modal */
+    #gameOverModal button {
+      background-color: #4CAF50;  /* Green background color */
+      color: white;  /* White text */
+      padding: 15px 32px;  /* Adds padding inside the button */
+      font-size: 18px;  /* Sets the font size */
+      cursor: pointer;  /* Shows a pointer cursor when hovering over the button */
+      border: none;  /* Removes any border */
+      border-radius: 5px;  /* Adds rounded corners to the button */
+    }
+
+    /* Hover effect for the button */
+    #gameOverModal button:hover {
+      background-color: #45a049;  /* Darker green background when hovered */
+    }
+  </style>
+</head>
+<body>
+  <!-- Canvas element where the game will be drawn -->
+  <canvas id="gameCanvas" width="400" height="600"></canvas>
+
+  <!-- Modal element for game over screen -->
+  <div id="gameOverModal">
+    <!-- Title displayed on game over -->
+    <h1>Game Over</h1>
+    <!-- Displays the player's score when the game ends -->
+    <p>Score: <span id="finalScore"></span></p>
+    <!-- Button to restart the game when pressed -->
+    <button id="restartButton">Press Enter to Restart</button>
+  </div>
+
+  <!-- Link to an external JavaScript file that contains game logic -->
+  <script src="flappyBird.js"></script>
+</body>
+</html>
