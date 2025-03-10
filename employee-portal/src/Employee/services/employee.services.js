@@ -15,24 +15,40 @@ exports.createEmployee = async (data) => {
     const empId = await generateEmpId();
     data.empId = empId;
     const employee = new Employee(data);
-    return await employee.save();
+    const savedEmployee = await employee.save();
+
+    // Convert to object and remove _id and __v before returning
+    const result = savedEmployee.toObject();
+    delete result._id;
+    delete result.__v;
+
+    return result;
 };
 
 // Get Employee by empId
 exports.getEmployeeById = async (empId) => {
-    return await Employee.findOne({ empId });
+    const employee = await Employee.findOne({ empId }).lean();
+
+    if (!employee) throw new Error("Employee not found");
+
+    delete employee._id;
+    delete employee.__v;
+
+    return employee;;
 };
 
 // Update Employee Designation
 exports.updateDesignation = async (empId, designation) => {
-    return await Employee.findOneAndUpdate({ empId }, { designation }, { new: true });
+    return await Employee.findOneAndUpdate({ empId }, { designation }, { new: true }).select("-__v");
 };
 
 // Get Employee List with Pagination & Search
 exports.getEmployeeList = async (start, offset, searchKey) => {
     const skip = (start - 1) * offset;
     const filter = searchKey ? { $or: [{ employeeName: new RegExp(searchKey, "i") }, { designation: new RegExp(searchKey, "i") }] } : {};
-    return await Employee.find(filter).skip(skip).limit(Number(offset));
+    //return await Employee.find(filter).skip(skip).limit(Number(offset));
+    return await Employee.find(filter).skip(skip).limit(Number(offset)).select("-__v");
+
 };
 
 // Delete Employee
