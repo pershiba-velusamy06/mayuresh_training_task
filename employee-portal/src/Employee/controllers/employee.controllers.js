@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const employeeService = require("../services/employee.services");
 const { validateEmployee } = require("../validators/employee.validators");
 
@@ -18,11 +19,11 @@ exports.createEmployee = async (req, res) => {
 exports.getEmployeeById = async (req, res) => {
     try {
         const employee = await employeeService.getEmployeeById(req.params.empId);
-        if (!employee) return res.status(404).json({ success: false, message: "Employee not found" });
+        if (!employee) return res.status(500).json({ success: false, message: "Employee not found" });
 
         res.status(200).json({ success: true, message: "Employee fetched successfully", result: [employee] });
     } catch (error) {
-        res.status(500).json({ success: false, errorCode: -1, message: "Server Error", result: [] });
+        res.status(500).json({ success: false, errorCode: -1, error: error?.message || "Internal Server Error", result: [] });
     }
 };
 
@@ -30,6 +31,7 @@ exports.getEmployeeById = async (req, res) => {
 exports.updateDesignation = async (req, res) => {
     try {
         const { empId, designation, ...extraKeys } = req.body;
+        if (req.body.designation !== "string") return res.status(500).json({ success: false, message: "Designation should be a string" });
         if (!empId || !designation) return res.status(400).json({ success: false, message: "empId and designation are required" });
         if (Object.keys(extraKeys).length > 0) return res.status(500).json({ success: false, message: "Only empId and designation are allowed in the request body" });
         const employee = await employeeService.updateDesignation(empId, designation);
@@ -45,7 +47,7 @@ exports.updateDesignation = async (req, res) => {
 exports.getEmployeeList = async (req, res) => {
     try {
         let { start, offset, searchKey, ...extraKeys } = req.query;
-        if (extraKeys) {
+        if (Object.keys(extraKeys).length > 0) {
             return res.status(500).json({ success: false, errorCode: -1, message: "Only start, offset, and searchKey are allowed as query parameters", result: [] });
         }   
 
